@@ -72,45 +72,32 @@ function agregarProductos(){
         //Selecciono el elemento contenedor en el HTML usando la class
         let contenedorProductos = document.querySelector(".productos__contenedor");
 
-        //Creo elementos con las class y el texto correspondientes
-        let contenedorColumn = document.createElement('div')    
-        contenedorColumn.classList.add('col');
+        //Creo un Div donde va a ir todo el contenido
+        let contenidoCard = document.createElement('div')
+        contenidoCard.classList.add('col')
 
-        let contenedorCard = document.createElement('div')    
-        contenedorCard.classList.add('card');   
-
-        let nombresProductos = document.createElement("h3"); 
-        nombresProductos.textContent = item['nombre']
-        nombresProductos.classList.add('card-title');
-        
-        let contenedorImg = document.createElement("div"); 
-        contenedorImg.classList.add('card-body');
-        
-        let imgProductos = new Image();
-        imgProductos.setAttribute(`src`,item['foto']);
-        imgProductos.classList.add('card-img-top');
-        
-        let precioProductos = document.createElement("p"); 
-        precioProductos.textContent = item['precio']
-        precioProductos.classList.add('card-subtitle'); 
-          
+        contenidoCard.innerHTML =
+        `<div class='card'>
+          <h3 class='card-title'>${item.nombre}</h3>
+          <div class='card-body'>
+            <img src='${item.foto}' class='card-img-top'/>
+          </div>
+          <p class ='card-subtitle'>$${item.precio}</p>
+        </div>`
+ 
+        //Agrego el boton que va a contener el evento 
         let btnAgregar = document.createElement(`button`);
         btnAgregar.classList.add('btn');
         btnAgregar.classList.add('btn-info');
         btnAgregar.textContent= (`Agregar al carrito`);
 
-        //Asignar cada elemento al contenedor correspondiente
-        contenedorProductos.appendChild(contenedorColumn)
-        contenedorColumn.appendChild(contenedorCard)
-        contenedorCard.appendChild(nombresProductos);
-        contenedorCard.appendChild(contenedorImg);
-        contenedorImg.appendChild(imgProductos)
-        contenedorCard.appendChild(precioProductos);
-        contenedorCard.appendChild(btnAgregar);
+        //Agrego cada contenido a su contenedor
+        contenidoCard.appendChild(btnAgregar)
+        contenedorProductos.appendChild(contenidoCard)
 
         //Evento para agregar los productos selecconados al array correspondiente
         btnAgregar.addEventListener('click', function(){
-            listaOrden.push({nombre: nombresProductos.innerText, precio: precioProductos.innerText})
+            listaOrden.push({nombre: item.nombre, precio: item.precio})
             agregarCarrito()
         })
 }

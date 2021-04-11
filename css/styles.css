@@ -105,6 +105,14 @@ body {
             text-align: center;
             
         }
+        .col{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .btn-info{
+          width: 60%;
+        }
 
 
         .productosSeleccionados{
