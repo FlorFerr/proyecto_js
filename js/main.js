@@ -69,40 +69,32 @@ let listaOrden = [];
 function agregarProductos(){
     for (let item of arrayProductos) {
 
-        //Selecciono el elemento contenedor en el HTML usando la class
-        let contenedorProductos = document.querySelector(".productos__contenedor");
+        $(".productos__contenedor").append(
+          `<div class='col'>         
+            <div class='card'>
+              <h3 class='card-title'>${item.nombre}</h3>
+              <div class='card-body'>
+                <img src='${item.foto}' class='card-img-top'/>
+              </div>
+              <p class ='card-subtitle'>$${item.precio}</p>
+            </div>
+            <button class="btn btn-info botonCompra" id="${item.nombre}">Agregar</button>
+          </div>`
+        )}
+    //Seleccionar el botón para el evento
+    let botones = $(".botonCompra") 
+      //HACEMOS OTRO FOR PARA ESCUCHAR LOS EVENTOS, SINO HACIAS MUCHISIMOS EVENTOS DE SOBRA
+      for (boton of botones){
+          $(boton).click(function(e){//E SERIA EL EVENTO QUE CAPTA
+            console.log(e.target.id) //SELECCIONO EL ID QUE TIENE LA DESCRIPCION DEL PRODUCTO CORRESPONDIENTE
+            item = arrayProductos.filter(producto => producto.nombre === e.target.id)[0] //Filtro por ID
+            //EL CERO ENTRE CORCHETES ES PARA QUE ELIJA EL PRIMER Y UNICO PRODUCTO
+            console.log(item);
+            listaOrden.push({nombre: item.nombre, precio: item.precio});
+            agregarCarrito();
 
-        //Creo un Div donde va a ir todo el contenido
-        let contenidoCard = document.createElement('div')
-        contenidoCard.classList.add('col')
-
-        contenidoCard.innerHTML =
-        `<div class='card'>
-          <h3 class='card-title'>${item.nombre}</h3>
-          <div class='card-body'>
-            <img src='${item.foto}' class='card-img-top'/>
-          </div>
-          <p class ='card-subtitle'>$${item.precio}</p>
-        </div>`
- 
-        //Agrego el boton que va a contener el evento 
-        let btnAgregar = document.createElement(`button`);
-        btnAgregar.classList.add('btn');
-        btnAgregar.classList.add('btn-info');
-        btnAgregar.textContent= (`Agregar al carrito`);
-
-        //Agrego cada contenido a su contenedor
-        contenidoCard.appendChild(btnAgregar)
-        contenedorProductos.appendChild(contenidoCard)
-
-        //Evento para agregar los productos selecconados al array correspondiente
-        btnAgregar.addEventListener('click', function(){
-            listaOrden.push({nombre: item.nombre, precio: item.precio})
-            agregarCarrito()
-        })
-}
-}
-
+})}}
+            
 //Función para mostrar los productos seleccionados
 function agregarCarrito(){
     let orden = [];
@@ -112,17 +104,14 @@ function agregarCarrito(){
                   <td>$${producto['precio']}</td>
                   </tr>`
     }
-
     //Selecciono el elemento de l table a donde quiero que se asignen los nuevos elementos
     let tabla = document.querySelector("tbody")
     tabla.innerHTML = (orden)
-    
     //Nuevo array con los precios de los productos seleccionados
     let costo=[];
     for(let cost of listaOrden){
       costo.push(Number(cost['precio']))
     }
-
     //If que suma los elementos del array y los muestra, si es que corresponde
     if(costo.length>0){
     let sumaCosto = costo.reduce((a,b)=>a+b)
@@ -133,8 +122,8 @@ function agregarCarrito(){
 }
 
 //Evento para quitar todos los elementos seleccionados
-let btnBorrar = document.querySelector(".btnQuitar")
-btnBorrar.addEventListener('click', function(){
+let btnBorrar = $(".btnQuitar")
+$(".btnQuitar").click(function(){
     listaOrden = [];
     agregarCarrito()
 })
