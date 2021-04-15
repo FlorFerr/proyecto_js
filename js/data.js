@@ -12,7 +12,7 @@ class Productos{
 }
 
 //Array de objetos
-let arrayProductos = [
+const arrayProductos = [
     { categoria: "Pantalones", 
       nombre:"Jean mom", 
       precio: 4000, 

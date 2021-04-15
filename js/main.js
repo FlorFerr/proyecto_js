@@ -68,4 +68,17 @@ $(".btnQuitar").click(function(){
 agregarProductos()
 
 
+$(".container").prepend('<p id="envios">¡Envíos gratis en compras mayores a $5000!</p>');
+//Declaración de métodos encadenados
+$("#envios").css("display", "none")
+        .css("font-size","20px")
+        .css("margin-top","20px")
+        .css("opacity",".5")
+        .slideDown(1000)
+        .animate({opacity:'1',})
 
+        .animate({opacity:'0.5',})
+
+        .animate({opacity:'1',})
+                    
+                          
