@@ -125,7 +125,7 @@ body {
           background-color: #FAF0E6;
           text-align: center;
           margin: 50px 0px;
-          width: 40%;
+        
           border: 1px solid #D7DBDD;
           
         }
@@ -135,9 +135,20 @@ body {
           margin: 20px;
         }
         
-        .btnQuitar {
+        .btnVaciar {
           margin: 0px 0px 20px;
         }
+        .btnComprar {
+          margin: 0px 0px 20px;
+        }
+        .btnEliminar{
+          background: none;
+          border: none;
+          cursor: pointer;
+  }
+  
+  
+        
 
         .sumaProductos{
           text-transform: uppercase;

@@ -19,70 +19,89 @@ $.getJSON(URLJSON, function (respuesta, estado) {
       }  
     //Seleccionar el botón para el evento 
     let botones = $(".botonCompra") 
-   
-          for (boton of botones){
-              $(boton).click(function(e){
-                
+         for (const boton of botones){
+             $(boton).click(function(e){
                 item = productos.filter(producto => producto.nombre === e.target.id)[0] //Filtro por ID
                 //EL CERO ENTRE CORCHETES ES PARA QUE ELIJA EL PRIMER Y UNICO PRODUCTO
-                console.log(item);
+                
                 listaOrden.push({nombre: item.nombre, precio: item.precio});
                 agregarCarrito();
-    
     })}
     }
     })}
 
-//Array para los productos seleccionados
 let listaOrden = [];
-//Función para mostrar los productos seleccionados
 function agregarCarrito(){
     let orden = [];
     for(let producto of listaOrden){
-        orden += `<tr>
+        orden += `<tr class= "productosCarrito">
                   <td>${producto['nombre']}</td>
                   <td>$${producto['precio']}</td>
+                  <td><input type="number" class="btnCantidad" value="1"></input></td>
+                  <td><button type="button" id="${producto['nombre']}" class="btnEliminar">Eliminar</button></td>
                   </tr>`
     }
+    
     //Selecciono el elemento del table a donde quiero que se asignen los nuevos elementos
     let tabla = document.querySelector("tbody")
     tabla.innerHTML = (orden)
-    //Nuevo array con los precios de los productos seleccionados
+
+  
+
+
+    
+    const botonEliminar = $(".btnEliminar")
+    for(btn of botonEliminar){    
+      $(btn).click(eliminarProducto)
+      }
+}
+
+//Función para vaciar el carrito
+function vaciarCarrito(){
+const btnBorrar = $(".btnVaciar")
+btnBorrar.click(function(){
+    listaOrden = [];
+    agregarCarrito()
+})}
+
+
+//Llamar a las funciones
+agregarProductos()
+vaciarCarrito()
+
+function eliminarProducto(event){
+  console.log("click")
+  btnSeleccionado = event.target;
+  itemDos = listaOrden.filter(producto => producto.nombre === event.target.id)[0]//Filtro por ID
+                //EL CERO ENTRE CORCHETES ES PARA QUE ELIJA EL PRIMER Y UNICO PRODUCTO
+  console.log(itemDos);
+  console.log(listaOrden);
+  indiceAEliminar = listaOrden.indexOf(itemDos); //SACO EL INDICE DEL PRODUCTO A ELIMINAR
+  btnSeleccionado.closest('.productosCarrito').remove(); 
+  listaOrden.splice(indiceAEliminar,1); //EN EL SPLICE COLOCO EL INDICE A ELIMINAR, NO EL PRODUCTO ENTERO
+  console.log(listaOrden);
+}
+
+
+
+/*
+  //Nuevo array con los precios de los productos seleccionados
     let costo=[];
     for(let cost of listaOrden){
       costo.push(Number(cost['precio']))
     }
-    //If que suma los elementos del array y los muestra, si es que corresponde
-    if(costo.length>0){
-    let sumaCosto = costo.reduce((a,b)=>a+b)
-    tabla.innerHTML +=`<tr class="sumaProductos"><td>Total</td><td class="total">$${sumaCosto}</td></tr>`
-    }else{
-      tabla.innerHTML +=`<td colspan="2" class="carritoVacio">El carrito de compras está vacío</td>`
-    }
+if(costo.length>0){
+  let sumaCosto = costo.reduce((a,b)=>a+b)
+  tabla.innerHTML +=`<tr class="sumaProductos"><td>Total</td><td class="total">$${sumaCosto}</td></tr>`
+  }else{
+    tabla.innerHTML +=`<td colspan="3" class="carritoVacio">El carrito de compras está vacío</td>`
+    //Evento Boton eliminar individualmente
+  }
+  
+  function eliminarProducto(event){
+  console.log("click")
+  btnSeleccionado = event.target;
+  btnSeleccionado.closest('.productosCarrito').remove();  
 }
 
-//Evento para quitar todos los elementos seleccionados
-let btnBorrar = $(".btnQuitar")
-$(".btnQuitar").click(function(){
-    listaOrden = [];
-    agregarCarrito()
-})
-
-//Llamada a la función
-agregarProductos()
-
-//Animación
-$(".container").prepend('<p id="envios">¡Envíos gratis en compras mayores a $5000!</p>');
-
-$("#envios").css("display", "none")
-        .css("font-size","20px")
-        .css("margin-top","20px")
-        .css("opacity",".5")
-        .slideDown(1000)
-        .animate({opacity:'1',})
-
-        .animate({opacity:'0.5',})
-
-        .animate({opacity:'1',})
-                    
-                          
+  */
