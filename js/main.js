@@ -2,9 +2,6 @@
 const URLJSON = "js/data.json"
 
 let listaOrden = []
-let tabla = document.querySelector("tbody")
-
-
 
 function agregarProductos(){
 $.getJSON(URLJSON, function (respuesta, estado) {
@@ -26,23 +23,16 @@ $.getJSON(URLJSON, function (respuesta, estado) {
       
     //Seleccionar el botón para el evento 
     let botones = $(".botonCompra") 
-    
-    
          for (const boton of botones){
              $(boton).click(function(e){
-                item = productos.filter(producto => producto.nombre === e.target.id)[0] //Filtro por ID
-                //EL CERO ENTRE CORCHETES ES PARA QUE ELIJA EL PRIMER Y UNICO PRODUCTO
-    
+                item = productos.filter(producto => producto.nombre === e.target.id)[0]//Filtro por ID. Con el 0 toma el primer y unico elemento.
                 listaOrden.push({nombre: item.nombre, precio: item.precio});
-                agregarCarrito()
-                
+                agregarCarrito()          
     })}
-    
     }
-    
     })}
 
-    
+let tablaProductosCarrito = document.querySelector("tbody")
 function agregarCarrito(){
   let orden = [];
     for(let producto of listaOrden){
@@ -54,9 +44,12 @@ function agregarCarrito(){
                   </tr>`
     }
     //Selecciono el elemento del table a donde quiero que se asignen los nuevos elementos
-    tabla.innerHTML = (orden)
+    tablaProductosCarrito.innerHTML = (orden)
 
-   
+   const botonesCantidad = $(".btnCantidad")
+   for(botonQ of botonesCantidad){
+     $(botonQ).change(cambiarCantidad)
+   }
 
 
 
@@ -106,18 +99,27 @@ function costoTotal(){
     precioItem.push(precio.precio)
     console.log(precioItem)
   }
-
+  
   if(precioItem.length>0){
   
   let sumaCosto = precioItem.reduce((a,b)=>a+b)
   console.log(sumaCosto)
+  
 
     tablaDos.innerHTML =`<p class="sumaProductos">Total $${sumaCosto} </p>`
+    
   }else{
-    tablaDos.innerHTML =`<p colspan="3" class="carritoVacio">El carrito de compras está vacío</p>`
+    tablaDos.innerHTML =`<p class="carritoVacio">El carrito de compras está vacío</p>`
   }
   
 
+}
+
+function cambiarCantidad(event){
+  const input = event.target
+  if(input.value <= 0){
+    input.value = 1
+  }
 }
 
 
