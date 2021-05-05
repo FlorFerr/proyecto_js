@@ -36,20 +36,19 @@ let tablaProductosCarrito = document.querySelector("tbody")
 function agregarCarrito(){
   let orden = [];
     for(let producto of listaOrden){
-        orden += `<tr class= "productosCarrito">
-                  <td class= "itemCarrito">${producto['nombre']}</td>
-                  <td class= "itemCarritoPrecio">$${producto['precio']}</td>
-                  <td><input type="number" class="btnCantidad" value="1"></input></td>
-                  <td><button type="button" id="${producto['nombre']}" class="btnEliminar">Eliminar</button></td>
+        orden += `<tr class= "producto__item">
+                  <td class= "item__titulo">${producto['nombre']}</td>
+                  <td class= "item__precio">$${producto['precio']}</td>
+                  <td><button type="button" id="${producto['nombre']}" class="btnEliminar"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
                   </tr>`
     }
     //Selecciono el elemento del table a donde quiero que se asignen los nuevos elementos
     tablaProductosCarrito.innerHTML = (orden)
 
-   const botonesCantidad = $(".btnCantidad")
+  /* const botonesCantidad = $(".btnCantidad")
    for(botonQ of botonesCantidad){
      $(botonQ).change(cambiarCantidad)
-   }
+   }*/
 
 
 
@@ -83,7 +82,7 @@ function eliminarProducto(event){
   console.log(itemDos);
   console.log(listaOrden);
   indiceAEliminar = listaOrden.indexOf(itemDos); //SACO EL INDICE DEL PRODUCTO A ELIMINAR
-  btnSeleccionado.closest('.productosCarrito').remove(); 
+  btnSeleccionado.closest('.producto__item').remove(); 
   listaOrden.splice(indiceAEliminar,1); //EN EL SPLICE COLOCO EL INDICE A ELIMINAR, NO EL PRODUCTO ENTERO
   console.log(listaOrden);
   costoTotal()
@@ -91,7 +90,7 @@ function eliminarProducto(event){
 
 
 
-tablaDos = document.querySelector(".totalSeleccionados")
+tablaDos = document.querySelector(".carrito__total")
 
 function costoTotal(){
   let precioItem = []
@@ -106,7 +105,7 @@ function costoTotal(){
   console.log(sumaCosto)
   
 
-    tablaDos.innerHTML =`<p class="sumaProductos">Total $${sumaCosto} </p>`
+    tablaDos.innerHTML =`<p>Total $${sumaCosto} </p>`
     
   }else{
     tablaDos.innerHTML =`<p class="carritoVacio">El carrito de compras está vacío</p>`
