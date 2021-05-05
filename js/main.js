@@ -7,7 +7,7 @@ function agregarProductos(){
 $.getJSON(URLJSON, function (respuesta, estado) {
   
     if(estado === "success"){
-      let productos = respuesta;
+      const productos = respuesta;
       for (const item of productos) {
         $(".productos__contenedor").append(`<div class='col'>         
         <div class='card'>
@@ -22,8 +22,8 @@ $.getJSON(URLJSON, function (respuesta, estado) {
       }  
       
     //Seleccionar el botón para el evento 
-    let botones = $(".botonCompra") 
-         for (const boton of botones){
+    const botonesComprar = $(".botonCompra") 
+         for (const boton of botonesComprar){
              $(boton).click(function(e){
                 item = productos.filter(producto => producto.nombre === e.target.id)[0]//Filtro por ID. Con el 0 toma el primer y unico elemento.
                 listaOrden.push({nombre: item.nombre, precio: item.precio});
@@ -32,7 +32,7 @@ $.getJSON(URLJSON, function (respuesta, estado) {
     }
     })}
 
-let tablaProductosCarrito = document.querySelector("tbody")
+const tablaProductosCarrito = document.querySelector("tbody")
 function agregarCarrito(){
   let orden = [];
     for(let producto of listaOrden){
@@ -45,25 +45,12 @@ function agregarCarrito(){
     //Selecciono el elemento del table a donde quiero que se asignen los nuevos elementos
     tablaProductosCarrito.innerHTML = (orden)
 
-  /* const botonesCantidad = $(".btnCantidad")
-   for(botonQ of botonesCantidad){
-     $(botonQ).change(cambiarCantidad)
-   }*/
-
-
-
     const botonEliminar = $(".btnEliminar")
     for(btn of botonEliminar){    
       $(btn).click(eliminarProducto)
       }
       costoTotal()
 }
-
-
-
-
-
-
 
 //Función para vaciar el carrito
 function vaciarCarrito(){
@@ -74,57 +61,36 @@ btnBorrar.click(function(){
 })}
 
 
-function eliminarProducto(event){
-  
+function eliminarProducto(event){  
   btnSeleccionado = event.target;
-  itemDos = listaOrden.filter(producto => producto.nombre === event.target.id)[0]//Filtro por ID
-                //EL CERO ENTRE CORCHETES ES PARA QUE ELIJA EL PRIMER Y UNICO PRODUCTO
-  console.log(itemDos);
-  console.log(listaOrden);
-  indiceAEliminar = listaOrden.indexOf(itemDos); //SACO EL INDICE DEL PRODUCTO A ELIMINAR
+  const ordenFiltrada = listaOrden.filter(producto => producto.nombre === event.target.id)[0]
+  const indiceAEliminar = listaOrden.indexOf(ordenFiltrada); //SACO EL INDICE DEL PRODUCTO A ELIMINAR
   btnSeleccionado.closest('.producto__item').remove(); 
   listaOrden.splice(indiceAEliminar,1); //EN EL SPLICE COLOCO EL INDICE A ELIMINAR, NO EL PRODUCTO ENTERO
   console.log(listaOrden);
   costoTotal()
 }
 
-
-
-tablaDos = document.querySelector(".carrito__total")
-
+const total = document.querySelector(".carrito__total")
 function costoTotal(){
-  let precioItem = []
-  for(precio of listaOrden){
-    precioItem.push(precio.precio)
-    console.log(precioItem)
+  const totalItem = []
+  for(costo of listaOrden){
+    totalItem.push(costo.precio)
+    console.log(totalItem)
   }
-  
-  if(precioItem.length>0){
-  
-  let sumaCosto = precioItem.reduce((a,b)=>a+b)
-  console.log(sumaCosto)
-  
-
-    tablaDos.innerHTML =`<p>Total $${sumaCosto} </p>`
-    
+  if(totalItem.length>0){
+    const sumaCosto = totalItem.reduce((a,b)=>a+b)
+    console.log(sumaCosto)
+    total.innerHTML =`<p>Total $${sumaCosto} </p>`
   }else{
-    tablaDos.innerHTML =`<p class="carritoVacio">El carrito de compras está vacío</p>`
-  }
-  
-
-}
-
-function cambiarCantidad(event){
-  const input = event.target
-  if(input.value <= 0){
-    input.value = 1
+    total.innerHTML =`<p class="carritoVacio">El carrito de compras está vacío</p>`
   }
 }
+
 
 
 //Llamar a las funciones
 agregarProductos()
-
 vaciarCarrito()
- 
+
 

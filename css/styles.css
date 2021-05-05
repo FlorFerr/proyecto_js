@@ -5,18 +5,25 @@
 
 body {
     background-color: #FDF7F6;
+    
 }
-
+header{
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
 #nav {
-    position: relative;
+  
     background-color: #FCC3C1;
     text-transform: uppercase;
     color: black;
     box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.66);}
     
-  #nav a:hover {
-    color: white;
-    transition: all 0.2s; }
+#nav li a:hover {
+  color: white;
+  transition: all 0.2s; }
 
 footer {
   width: 100%;
