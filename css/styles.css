@@ -19,7 +19,12 @@ header{
     background-color: #FCC3C1;
     text-transform: uppercase;
     color: black;
-    box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.66);}
+    box-shadow: 0px 1px 7px 1px rgba(0, 0, 0, 0.66);
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+  }
+    
     
 #nav li a:hover {
   color: white;
@@ -124,9 +129,21 @@ width: 60%;
   text-transform: uppercase;
   font-weight: 600;
   margin: 20px;
+  background-color: ivory;
 }
 
 /*Botones Carrito*/
+.abrirCarrito{
+  font-size: 25px;
+  background-color: gray;
+  text-decoration: none;
+  color: white;
+  border-radius: 4px;
+}
+.abrirCarrito:hover{
+  color: black;
+  transition: all 0.2s;
+}
 .btnCerrar{
   position: absolute;
   display: inline-block;
@@ -138,9 +155,19 @@ width: 60%;
   border: none;
   font-size: 30px;  
 }
-.btnVaciar .btnComprar{
-  margin: 0px 0px 20px;
+.btnVaciar:hover{
+    color: #fff;
+    background-color: #c82333;
+    border-color: #bd2130;
 }
+.btnComprar:hover{
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+
+
 .btnEliminar{
   background: none;
   border: none;
@@ -149,6 +176,16 @@ width: 60%;
 .carritoVacio{
   text-transform: uppercase;
   text-align: center;
+}
+.prueba{
+  margin: 20px;
+}
+a.continuarCompra{
+  text-decoration: none;
+  color: black;
+}
+a.continuarCompra:hover{
+  color: gray;
 }
 
 /*Modal*/
@@ -171,11 +208,11 @@ width: 60%;
 
 }
 .carrito__contenedor{
+position: relative;
+top: 2%;
+left: 30%;
 width: 40%;
 height: auto;
-position: relative;
-transition: transform 0.6s;
-transform: translateY(0%);
 border-radius: 5px;
 display: flex;
 align-items: center;
@@ -185,10 +222,12 @@ text-align: center;
 margin: 50px 0px;
 border: 1px solid #D7DBDD;
 overflow-y: auto;
+transition: transform 0.6s;
+transform: translateX(0%);
 }
 
 .modal__contenedor{
-  transform: translateY(-200%);
+  transform: translateX(200%);
 }
 
 .carrito__productos{

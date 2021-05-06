@@ -115,7 +115,14 @@ window.addEventListener("click", function(e){
 })
 
 
-
+$(".continuarCompra").click(function(e){
+  e.preventDefault()
+  modal.classList.toggle("modal__contenedor")
+  setTimeout(function(){
+   $(".carrito").css("opacity","0")
+                .css("visibility","hidden");
+  },300)
+ })
 
 
 
