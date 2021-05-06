@@ -87,10 +87,44 @@ function costoTotal(){
   }
 }
 
+let modal = document.querySelector(".carrito__contenedor")
+let carrito = document.querySelector(".carrito")
+$(".abrirCarrito").click(function(e){
+  e.preventDefault()
+  $(".carrito").css("opacity","1")
+               .css("visibility","visible");
+ modal.classList.toggle("modal__contenedor")
+})
+
+$(".btnCerrar").click(function(){
+ modal.classList.toggle("modal__contenedor")
+ setTimeout(function(){
+  $(".carrito").css("opacity","0")
+               .css("visibility","hidden");
+ },300)
+})
+
+window.addEventListener("click", function(e){
+  if(e.target == carrito){
+    modal.classList.toggle("modal__contenedor")
+    setTimeout(function(){
+      $(".carrito").css("opacity","0")
+      .css("visibility","hidden");
+    },300)
+  }
+})
+
+
+
+
+
+
 
 
 //Llamar a las funciones
 agregarProductos()
 vaciarCarrito()
+
+
 
 
