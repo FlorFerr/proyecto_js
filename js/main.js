@@ -3,6 +3,8 @@ const URLJSON = "js/data.json"
 
 let listaOrden = []
 const badge = document.querySelector(".button__badge")
+const myModal = new bootstrap.Modal(document.getElementById('myModal'))
+const btnComprar = document.querySelector(".btnComprar")
 
 function agregarProductos(){
 $.getJSON(URLJSON, function (respuesta, estado) {
@@ -24,6 +26,11 @@ $.getJSON(URLJSON, function (respuesta, estado) {
       
     //Seleccionar el botón para el evento 
     const botonesComprar = $(".botonCompra") 
+         botonesComprar.click(function(){
+          $(".carrito").css("opacity","1")
+                       .css("visibility","visible");
+          modal.classList.toggle("modal__contenedor")
+          })
          for (const boton of botonesComprar){
              $(boton).click(function(e){
                 item = productos.filter(producto => producto.nombre === e.target.id)[0]//Filtro por ID. Con el 0 toma el primer y unico elemento.
@@ -45,14 +52,13 @@ function agregarCarrito(){
     }
     //Selecciono el elemento del table a donde quiero que se asignen los nuevos elementos
     tablaProductosCarrito.innerHTML = (orden)
-
+    
     const botonEliminar = $(".btnEliminar")
     for(btn of botonEliminar){    
       $(btn).click(eliminarProducto)
       }
       costoTotal()
-      actualizarBadge()
-    
+      actualizarBadge()      
 }
 
 //Función para vaciar el carrito
@@ -60,8 +66,11 @@ function vaciarCarrito(){
 const btnBorrar = $(".btnVaciar")
 btnBorrar.click(function(){
     listaOrden = [];
+    
     agregarCarrito()
     actualizarBadge()
+    
+    
     
 })}
 
@@ -73,8 +82,11 @@ function eliminarProducto(event){
   btnSeleccionado.closest('.producto__item').remove(); 
   listaOrden.splice(indiceAEliminar,1); //EN EL SPLICE COLOCO EL INDICE A ELIMINAR, NO EL PRODUCTO ENTERO
   console.log(listaOrden);
+  
   costoTotal()
   actualizarBadge()
+  
+
 }
 
 const total = document.querySelector(".carrito__total")
@@ -90,6 +102,7 @@ function costoTotal(){
     total.innerHTML =`<p>Total $${sumaCosto} </p>`
   }else{
     total.innerHTML =`<p class="carritoVacio">El carrito de compras está vacío</p>`
+    
   }
 }
 
@@ -99,12 +112,14 @@ function actualizarBadge(){
 
 let modal = document.querySelector(".carrito__contenedor")
 let carrito = document.querySelector(".carrito")
+
 $(".abrirCarrito").click(function(e){
   e.preventDefault()
   $(".carrito").css("opacity","1")
                .css("visibility","visible");
  modal.classList.toggle("modal__contenedor")
 })
+
 
 $(".btnCerrar").click(function(){
  modal.classList.toggle("modal__contenedor")
@@ -134,13 +149,35 @@ $(".continuarCompra").click(function(e){
   },300)
  })
 
+ $(".close").click(function(e){
+  e.preventDefault()
+  modal.classList.toggle("modal__contenedor")
+  setTimeout(function(){
+   $(".carrito").css("opacity","0")
+                .css("visibility","hidden");
+  },300)
+ })
+
+
+ 
 
 
 
+
+ btnComprar.addEventListener("click", function(){
+  myModal.show()
+ })
+ 
+
+
+
+
+ 
 
 //Llamar a las funciones
 agregarProductos()
 vaciarCarrito()
+
 
 
 
