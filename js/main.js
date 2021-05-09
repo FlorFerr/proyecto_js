@@ -2,6 +2,7 @@
 const URLJSON = "js/data.json"
 
 let listaOrden = []
+const badge = document.querySelector(".button__badge")
 
 function agregarProductos(){
 $.getJSON(URLJSON, function (respuesta, estado) {
@@ -50,6 +51,8 @@ function agregarCarrito(){
       $(btn).click(eliminarProducto)
       }
       costoTotal()
+      actualizarBadge()
+    
 }
 
 //Función para vaciar el carrito
@@ -58,6 +61,8 @@ const btnBorrar = $(".btnVaciar")
 btnBorrar.click(function(){
     listaOrden = [];
     agregarCarrito()
+    actualizarBadge()
+    
 })}
 
 
@@ -69,6 +74,7 @@ function eliminarProducto(event){
   listaOrden.splice(indiceAEliminar,1); //EN EL SPLICE COLOCO EL INDICE A ELIMINAR, NO EL PRODUCTO ENTERO
   console.log(listaOrden);
   costoTotal()
+  actualizarBadge()
 }
 
 const total = document.querySelector(".carrito__total")
@@ -85,6 +91,10 @@ function costoTotal(){
   }else{
     total.innerHTML =`<p class="carritoVacio">El carrito de compras está vacío</p>`
   }
+}
+
+function actualizarBadge(){
+  badge.innerText = listaOrden.length
 }
 
 let modal = document.querySelector(".carrito__contenedor")
