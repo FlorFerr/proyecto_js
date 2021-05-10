@@ -169,10 +169,8 @@ $(".continuarCompra").click(function(e){
  })
  
 
+//Animación
 
-
-
- 
 
 //Llamar a las funciones
 agregarProductos()
@@ -180,5 +178,18 @@ vaciarCarrito()
 
 
 
+$(".container").prepend('<p id="envios">¡Envíos gratis en compras mayores a $5000!</p>');
 
+
+
+$("#envios").css("display", "none")
+        .css("background-color", "black")
+        .css("color", "white")
+        .css("font-size","20px")
+        .css("margin-top","20px")
+        .css("opacity",".5")
+        .slideDown(1000)
+        .animate({opacity:'1',})
+        .animate({opacity:'0.5',})
+        .animate({opacity:'1',})
 
